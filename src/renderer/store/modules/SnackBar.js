@@ -3,7 +3,12 @@ const state = {
 }
 
 const mutations = {
-
+  TOAST (state, payload) {
+    if (typeof payload.color === 'undefined') {
+      payload.color = ''
+    }
+    state.data = payload
+  }
 }
 
 const actions = {

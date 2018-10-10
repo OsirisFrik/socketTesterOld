@@ -24,6 +24,7 @@
   </div>
 </template>
 <script>
+  import { mapMutations } from 'vuex'
   export default {
     name: 'Home',
     data: () => ({
@@ -68,10 +69,20 @@
       })
     },
     methods: {
+      ...mapMutations({
+        toast: 'TOAST'
+      }),
       updateName: function (tab) {
         this.$db.tabs.update({_id: tab._id}, tab).then(r => {
-          console.log(r)
+          this.toast({
+            message: 'Tab updated',
+            color: 'success'
+          })
         }).catch(err => {
+          this.toast({
+            message: 'Error on update',
+            color: 'error'
+          })
           throw Error(err)
         })
         this.editTab = null

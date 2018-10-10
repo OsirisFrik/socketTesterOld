@@ -1,7 +1,7 @@
 <template>
   <div id="snackbar">
-    <v-snackbar v-model="show" :color="color" :multi-line="mode === 'multi-line'" :timeout="timeout" :vertical="mode === 'vertical'">
-      {{ text }}
+    <v-snackbar v-model="show" :color="color" :timeout="timeout">
+      {{ message }}
       <v-btn dark flat @click="show = false" v-if="showClose">
         Close
       </v-btn>
@@ -12,15 +12,19 @@
   export default {
     name: 'SnackBar',
     data: () => ({
-      show: true,
+      show: false,
       color: '',
       timeout: 6000,
-      text: 'Hola',
+      message: 'Hola',
       showClose: false
     }),
     created () {
+      const vm = this
       this.$store.watch(state => state.SnackBar.data, value => {
-        console.log(value)
+        for (const key in value) {
+          vm[key] = value[key]
+        }
+        this.show = true
       })
     }
   }

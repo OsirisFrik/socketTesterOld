@@ -11,12 +11,17 @@ import Database from '../database'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css'
+import './assets/style.scss'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false
 
 Vue.prototype.$db = Database
-window.$db = Database
+
+if (process.env.NODE_ENV === 'development') {
+  window.$db = Database
+}
+
 Vue.use(Vuetify)
 
 /* eslint-disable no-new */

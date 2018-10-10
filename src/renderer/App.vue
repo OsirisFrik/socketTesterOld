@@ -1,15 +1,16 @@
 <template>
-  <div id="app">
+  <v-app id="app" dark>
     <router-view></router-view>
-  </div>
+    <snack-bar></snack-bar>
+  </v-app>
 </template>
 
 <script>
+  import SnackBar from './components/SnackBar'
   export default {
-    name: 'sockettester'
+    name: 'sockettester',
+    components: {
+      'snack-bar': SnackBar
+    }
   }
 </script>
-
-<style>
-  /* CSS */
-</style>

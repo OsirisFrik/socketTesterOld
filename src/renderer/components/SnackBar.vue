@@ -11,17 +11,17 @@
 <script>
   export default {
     name: 'SnackBar',
+    data: () => ({
+      show: true,
+      color: '',
+      timeout: 6000,
+      text: 'Hola',
+      showClose: false
+    }),
     created () {
       this.$store.watch(state => state.SnackBar.data, value => {
         console.log(value)
       })
-    },
-    data: () => ({
-      show: true,
-      color: null,
-      timeout: 6000,
-      text: 'Hola',
-      showClose: false
-    })
+    }
   }
 </script>

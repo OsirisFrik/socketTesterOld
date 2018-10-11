@@ -1,12 +1,22 @@
+const originalData = {
+  message: null,
+  color: '',
+  timeout: 6000,
+  showClose: false
+}
+
 const state = {
   data: {}
 }
 
 const mutations = {
   TOAST (state, payload) {
-    if (typeof payload.color === 'undefined') {
-      payload.color = ''
+    for (const key in originalData) {
+      if (typeof payload[key] === 'undefined') {
+        payload[key] = originalData[key]
+      }
     }
+
     state.data = payload
   }
 }

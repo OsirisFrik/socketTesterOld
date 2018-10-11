@@ -1,3 +1,9 @@
 .pointer {
     cursor: pointer;
 }
+
+.delete {
+    &:hover {
+        color: red;
+    }
+}

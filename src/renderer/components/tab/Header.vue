@@ -13,7 +13,26 @@
             <v-btn color="error" :disabled="tab.socket === null" @click="disconnect">{{$t('general.disconnect')}}</v-btn>
           </v-flex>
           <v-flex xs1 offset-xs4 justify-end>
-            <v-icon class="pointer delete">delete</v-icon>
+            <v-layout row justify-center>
+              <v-btn color="error" flat dark @click.native.stop="confirmDelete = true" icon="icon">
+                <v-icon>delete</v-icon>
+              </v-btn>
+              <v-dialog v-model="confirmDelete" max-width="290">
+                <v-card>
+                  <v-card-title class="headline">
+                    {{$t('dialogs.titleDelete', {name: tab.name})}}
+                  </v-card-title>
+                  <v-card-text>
+                    {{$t('dialogs.confirmDelete', {name: tab.name})}}
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="warning" flat="flat" @click.native="confirmDelete = false">{{$t('general.cancel')}}</v-btn>
+                    <v-btn color="error" flat="flat" @click.native="deleteTab(id, index); confirmDelete = false">{{$t('general.confirm')}}</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-layout>
           </v-flex>
         </v-layout>
       </v-form>
@@ -22,35 +41,40 @@
       <v-tab ripple>
         {{$t('general.options')}}
       </v-tab>
+      <v-tab>
+        {{$t('general.events')}}
+      </v-tab>
       <v-tab-item>
-        <v-form>
-          <v-layout row wrap style="padding: 5px;">
-            <v-flex xs4>
-              <v-text-field name="path" label="Path" :id="`path_${id}`" v-model="tab.options.path.path" @blur="updatePath"></v-text-field>
-            </v-flex>
-            <v-flex sx1>
-              <v-switch :label="$t(tab.options.path.active ? 'general.active' : 'general.inactive')" v-model="tab.options.path.active" @change="updatePath"></v-switch>
-            </v-flex>
-          </v-layout>
-        </v-form>
+        <options :id="id" :options="tab.options"></options>
+      </v-tab-item>
+      <v-tab-item>
+        <events :id="id" :events="tab.events" :socket="tab.socket"></events>
       </v-tab-item>
     </v-tabs>
   </div>
 </template>
 <script>
-  import {
-    mapMutations
-  } from 'vuex'
+  import { mapMutations } from 'vuex'
+  import Options from './Options'
+  import Events from './Events'
   import socket from '../../service/socket.sv'
+
   export default {
     name: 'TabHeader',
+    components: {
+      'options': Options,
+      'events': Events
+    },
     props: {
       tab: Object,
-      id: String
+      id: String,
+      index: Number,
+      deleteTab: Function
     },
     data: () => ({
       settings: false,
       tryConnect: false,
+      confirmDelete: false,
       active: 0
     }),
     methods: {
@@ -58,7 +82,7 @@
         toast: 'TOAST'
       }),
       updateURL: function () {
-        this.$db.tabs.update({
+        this.$tabs.update({
           _id: this.id
         }, {
           $set: {
@@ -69,19 +93,6 @@
         }).catch(err => {
           this.toast({
             message: this.$t('error.save')
-          })
-          throw Error(err)
-        })
-      },
-      updatePath: function () {
-        this.$db.tabs.update({_id: this.id}, {
-          $set: {
-            'options.path': this.tab.options.path
-          }
-        }).catch(err => {
-          this.toast({
-            message: `Save error`,
-            color: 'error'
           })
           throw Error(err)
         })

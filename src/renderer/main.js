@@ -7,6 +7,7 @@ import store from './store'
 
 import i18n from '../i18n'
 import Database from '../database'
+import Customs from '../customs'
 
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
@@ -16,12 +17,6 @@ import './assets/style.scss'
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false
 
-Vue.prototype.$db = Database
-
-if (process.env.NODE_ENV === 'development') {
-  window.$db = Database
-}
-
 Vue.use(Vuetify)
 
 /* eslint-disable no-new */
@@ -30,5 +25,7 @@ new Vue({
   router,
   store,
   i18n,
+  Customs,
+  Database,
   template: '<App/>'
 }).$mount('#app')

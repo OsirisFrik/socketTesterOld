@@ -1,13 +1,13 @@
 <template>
   <div :id="`header_${id}`">
     <v-card>
-      <v-form @submit.prevent="connect">
+      <v-form @submit.prevent="(tab.socket === null ? connect() : reconnectSocket())">
         <v-layout row wrap style="padding: 5px 8px">
           <v-flex xs4>
             <v-text-field name="ws" label="WS URL" :id="`ws-${id}`" v-model="tab.ws" @blur="updateURL"></v-text-field>
           </v-flex>
           <v-flex xs2>
-            <v-btn :disabled="tab.ws === null || tryConnect" color="success" type="submit">{{$t('general.connect')}}</v-btn>
+            <v-btn :disabled="tab.ws === null || tryConnect" color="success" type="submit">{{tab.socket === null ? $t('general.connect') : $t('general.reconnect')}}</v-btn>
           </v-flex>
           <v-flex xs1>
             <v-btn color="error" :disabled="tab.socket === null" @click="disconnect">{{$t('general.disconnect')}}</v-btn>
@@ -44,11 +44,17 @@
       <v-tab>
         {{$t('general.events')}}
       </v-tab>
+      <v-tab>
+        {{$t('general.emits')}}
+      </v-tab>
       <v-tab-item>
         <options :id="id" :options="tab.options"></options>
       </v-tab-item>
       <v-tab-item>
         <events :id="id" :events="tab.events" :socket="tab.socket"></events>
+      </v-tab-item>
+      <v-tab-item>
+        <emits :id="id" :emits="tab.emits" :socket="tab.socket"></emits>
       </v-tab-item>
     </v-tabs>
   </div>
@@ -57,13 +63,15 @@
   import { mapMutations } from 'vuex'
   import Options from './Options'
   import Events from './Events'
+  import Emits from './Emits'
   import socket from '../../service/socket.sv'
 
   export default {
     name: 'TabHeader',
     components: {
       'options': Options,
-      'events': Events
+      'events': Events,
+      'emits': Emits
     },
     props: {
       tab: Object,
@@ -101,6 +109,7 @@
         this.tryConnect = true
         socket.connect(this.tab).then(sock => {
           this.tab.socket = sock
+          this.tryConnect = false
           this.toast({
             message: `Socket ${this.tab.name} connected`,
             color: 'success'
@@ -114,10 +123,20 @@
           throw Error(err)
         })
       },
-      disconnect: function () {
+      disconnect: function (cb) {
         this.tab.socket.disconnect()
         this.tab.socket = null
         this.tryConnect = false
+
+        if (typeof cb === 'function') {
+          cb()
+        }
+      },
+      reconnectSocket: function () {
+        let connect = this.connect
+        this.disconnect(function () {
+          connect()
+        })
       }
     }
   }

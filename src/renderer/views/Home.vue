@@ -42,9 +42,10 @@
     events: [{
       event: null,
       active: false,
-      show: false
+      show: false,
+      data: []
     }],
-    emmits: [{
+    emits: [{
       event: null,
       value: null
     }]

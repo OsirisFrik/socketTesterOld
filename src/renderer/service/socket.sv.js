@@ -35,7 +35,6 @@ export default {
       path: (tab.options.path.active ? tab.options.path.path : null),
       query: await getQuerys(tab.options.querys)
     })
-    console.log(socket)
     Store.commit('TOAST', {
       message: 'Connecting',
       color: 'info'
@@ -56,6 +55,12 @@ export default {
           color: 'warning'
         })
         counter = value
+      })
+
+      socket.on('reconnect', () => {
+        toast({
+          message: `Socket ${tab.name} reconnected`
+        })
       })
 
       socket.on('connect', () => {

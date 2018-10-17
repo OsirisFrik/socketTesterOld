@@ -7,7 +7,9 @@
     "active": "active",
     "inactive": "inactive",
     "cancel": "cancel",
-    "confirm": "confirm"
+    "confirm": "confirm",
+    "reconnect": "reconnect",
+    "emits": "emits"
   },
   "dialogs": {
     "titleDelete": "Dete {name}",

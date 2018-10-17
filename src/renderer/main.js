@@ -9,7 +9,7 @@ import i18n from '../i18n'
 import Database from '../database'
 import Customs from '../customs'
 
-import 'highlight.js/styles/default.css'
+import 'ace-builds/src-min-noconflict/ace.js'
 import 'vuetify/dist/vuetify.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css'

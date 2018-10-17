@@ -90,6 +90,9 @@
         toast: 'TOAST'
       }),
       updateURL: function () {
+        if (this.tab.ws.indexOf('http') < 0) {
+          this.tab.ws = `http://${this.tab.ws}`
+        }
         this.$tabs.update({
           _id: this.id
         }, {

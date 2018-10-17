@@ -77,7 +77,11 @@
       }]
     }),
     mounted () {
-      ace.config.set('basePath', '../../../../node_modules/ace-builds/src-min-noconflict')
+      if (process.env.NODE_ENV === 'development') {
+        ace.config.set('basePath', '../../../../node_modules/ace-builds/src-min-noconflict')
+      } else {
+        ace.config.set('basePath', '../../node_modules/ace-builds/src-min-noconflict')
+      }
       this.beautify = ace.require('ace/ext/beautify')
       this.editor = ace.edit(`emit-${this.id}`, {
         mode: 'ace/mode/json',

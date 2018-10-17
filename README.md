@@ -4,4 +4,7 @@
   <br>
 </div>
 
-[![forthebadge](https://forthebadge.com/images/badges/built-by-developers.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-vue.svg)](https://forthebadge.com) 
+![made-with-electron](https://img.shields.io/badge/made%20with-electron-green.svg?longCache=true&style=for-the-badge
+) ![with-vue](https://img.shields.io/badge/made%20with-vue.js-green.svg?longCache=true&style=for-the-badge&logo=vue.js
+) ![for-develipers](https://img.shields.io/badge/for-developers-orange.svg?longCache=true&style=for-the-badge
+)

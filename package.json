@@ -97,7 +97,7 @@
   },
   "author": "OsirisFrik <osiris@frikdev.com>",
   "description": "Socket.io client tester",
-  "license": "MPL-2.0",
+  "license": "MIT",
   "main": "./dist/electron/main.js",
   "build": {
     "productName": "sockettester",

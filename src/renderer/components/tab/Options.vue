@@ -24,7 +24,7 @@
               </v-btn>
             </span>
           </v-card-title>
-          <v-data-table :headers="querys" :items="options.querys" hide-actions hide-headers>
+          <v-data-table :items="options.querys" hide-actions hide-headers>
             <template slot="items" slot-scope="props">
               <td>
                 <v-text-field name="queryName" label="Name" :id="`querys_name_${props.index}`" v-model="props.item.name" @blur="updateOptions('querys')"></v-text-field>
@@ -52,7 +52,7 @@
               </v-btn>
             </span>
           </v-card-title>
-          <v-data-table :headers="header" :items="options.headers" hide-actions hide-headers>
+          <v-data-table :items="options.headers" hide-actions hide-headers>
             <template slot="items" slot-scope="props">
               <td>
                 <v-text-field name="queryName" label="Name" :id="`headers_name_${props.index}`" v-model="props.item.name" @blur="updateOptions('headers')"></v-text-field>
@@ -86,34 +86,7 @@
       index: Number,
       options: Object
     },
-    data: () => ({
-      querys: [{
-        text: 'Query Name',
-        align: 'left',
-        value: 'name'
-      }, {
-        text: 'Value',
-        align: 'center',
-        value: 'value'
-      }, {
-        text: 'Active',
-        align: 'center',
-        value: 'active'
-      }],
-      header: [{
-        text: 'Header Name',
-        align: 'left',
-        value: 'name'
-      }, {
-        text: 'Value',
-        align: 'center',
-        value: 'value'
-      }, {
-        text: 'Active',
-        align: 'center',
-        value: 'active'
-      }]
-    }),
+    data: () => ({}),
     mounted () {
       if (typeof this.options.headers === 'undefined') {
         this.options.headers = [newOption]
@@ -145,6 +118,10 @@
           active: false
         })
         this.updateOptions(option, 'added')
+        let save = this
+        setTimeout(function () {
+          document.getElementById(`${option}_name_${save.options[option].length - 1}`).focus()
+        }, 100)
       },
       deleteOption: function (option, index) {
         this.options[option].splice(index, 1)

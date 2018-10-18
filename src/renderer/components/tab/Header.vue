@@ -90,9 +90,6 @@
         toast: 'TOAST'
       }),
       updateURL: function () {
-        if (this.tab.ws.indexOf('http') < 0) {
-          this.tab.ws = `http://${this.tab.ws}`
-        }
         this.$tabs.update({
           _id: this.id
         }, {
@@ -108,23 +105,12 @@
           throw Error(err)
         })
       },
-      connect: function () {
+      connect: async function () {
         this.tryConnect = true
-        socket.connect(this.tab).then(sock => {
-          this.tab.socket = sock
+        this.tab.socket = await socket.connect(this.tab)
+        if (this.tab.socket !== null) {
           this.tryConnect = false
-          this.toast({
-            message: `Socket ${this.tab.name} connected`,
-            color: 'success'
-          })
-        }).catch(err => {
-          this.tryConnect = false
-          this.toast({
-            message: `Socket ${this.tab.name} connection error`,
-            color: 'error'
-          })
-          throw Error(err)
-        })
+        }
       },
       disconnect: function (cb) {
         this.tab.socket.disconnect()

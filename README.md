@@ -8,7 +8,7 @@
 [![made-with-electron](https://img.shields.io/badge/made%20with-electron-green.svg?longCache=true&style=for-the-badge)](https://electron.io)
 ![with-vue](https://img.shields.io/badge/made%20with-vue.js-green.svg?longCache=true&style=for-the-badge&logo=vue.js)
 ![for-develipers](https://img.shields.io/badge/for-developers-orange.svg?longCache=true&style=for-the-badge)
-![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
+![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg?&longCache=true&style=for-the-badg)
 <br>
 [![Travis (.org) branch](https://img.shields.io/travis/OsirisFrik/socketTester/master.svg?icon=travisci&longCache=true&style=for-the-badge)](https://travis-ci.org/OsirisFrik/socketTester)
 [![Build status](https://img.shields.io/appveyor/ci/OsirisFrik/SocketTester/master.svg?icon=appveyor&longCache=true&style=for-the-badge)](https://ci.appveyor.com/project/OsirisFrik/sockettester/branch/master)

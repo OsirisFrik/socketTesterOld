@@ -100,7 +100,7 @@
   "license": "MIT",
   "main": "./dist/electron/main.js",
   "build": {
-    "productName": "sockettester",
+    "productName": "Socket Tester",
     "appId": "com.frikdev.sockettester",
     "directories": {
       "output": "build"

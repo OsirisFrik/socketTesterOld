@@ -139,12 +139,12 @@
         })
       },
       addOption: function (option) {
-        this.options[option].push(newOption)
+        this.options[option].push({
+          name: null,
+          value: null,
+          active: false
+        })
         this.updateOptions(option, 'added')
-        let save = this
-        setTimeout(function () {
-          document.getElementById(`${option}_name_${save.options[option].length - 1}`).focus()
-        }, 100)
       },
       deleteOption: function (option, index) {
         this.options[option].splice(index, 1)

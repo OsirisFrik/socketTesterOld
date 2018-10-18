@@ -19,11 +19,11 @@
 <br>
 <br>
 
-![main](docs/main.png) 
+![main](docs/main.PNG) 
 <br>
-![events](docs/events.png)
+![events](docs/events.PNG)
 <br>
-![emits](docs/emits.png)
+![emits](docs/emits.PNG)
 </div>
 
 ## Features

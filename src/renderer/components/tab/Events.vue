@@ -17,7 +17,7 @@
               </v-btn>
             </span>
           </v-card-title>
-          <v-data-table :headers="eventsHeaders" :items="events" hide-actions hide-headers>
+          <v-data-table :items="events" hide-actions hide-headers>
             <template slot="items" slot-scope="props">
               <td>
                 <v-text-field name="queryName" label="Name" :id="`name_${props.index}`" v-model="props.item.event" @blur="updateEvents"></v-text-field>
@@ -58,20 +58,7 @@
       sourcecode: 'var hi = "hi"',
       editor: null,
       beautify: null,
-      onShow: null,
-      eventsHeaders: [{
-        text: 'Event name',
-        align: 'left',
-        value: 'event'
-      }, {
-        text: 'Active',
-        align: 'center',
-        value: 'active'
-      }, {
-        text: 'Show',
-        alias: 'center',
-        value: 'show'
-      }]
+      onShow: null
     }),
     mounted () {
       if (process.env.NODE_ENV === 'development') {

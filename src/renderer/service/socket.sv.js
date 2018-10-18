@@ -19,6 +19,31 @@ async function getQuerys (querys) {
 }
 
 /**
+ * @method getHeaders
+ * @param {Array} headers
+ * @returns {Object} HEADERS
+ */
+
+async function getHeaders (headers) {
+  var HEADERS = {}
+  for (let i = 0; i < headers.length; i++) {
+    const header = headers[i]
+    if (header.active) {
+      if (typeof HEADERS[header.name] !== 'undefined' && HEADERS[headers.name] !== null) {
+        if (Array.isArray(HEADERS[header.name])) {
+          HEADERS[header.name].push(header.value)
+        } else {
+          HEADERS[header.name] = [HEADERS[header.name], header.value]
+        }
+      } else {
+        HEADERS[header.name] = header.value
+      }
+    }
+  }
+  return HEADERS
+}
+
+/**
  * @method toast
  * @param {Object} data
  * @param {String} data.message
@@ -33,39 +58,54 @@ export default {
   connect: async function (tab) {
     const socket = io(tab.ws, {
       path: (tab.options.path.active ? tab.options.path.path : null),
-      query: await getQuerys(tab.options.querys)
+      query: await getQuerys(tab.options.querys),
+      extraHeaders: await getHeaders(tab.options.headers)
     })
-    Store.commit('TOAST', {
+
+    toast({
       message: 'Connecting',
       color: 'info'
     })
-    return new Promise((resolve, reject) => {
-      let counter = 0
-      socket.on('reconnect_error', err => {
-        if (counter > 5) {
-          socket.disconnect()
-          reject(err)
-        }
-      })
 
-      socket.on('reconnect_attempt', value => {
-        console.warn('Reconnect try', value)
-        toast({
-          message: `Try reconnect to socket ${tab.name}, #${value}`,
-          color: 'warning'
-        })
-        counter = value
-      })
+    let counter = 0
+    socket.on('reconnect_error', err => {
+      if (counter > 5) {
+        socket.disconnect()
+        tab.socket = null
+        throw Error(err)
+      }
+    })
 
-      socket.on('reconnect', () => {
-        toast({
-          message: `Socket ${tab.name} reconnected`
-        })
+    socket.on('reconnect_attempt', value => {
+      console.warn('Reconnect try', value)
+      toast({
+        message: `Try reconnect to socket ${tab.name}, #${value}`,
+        color: 'warning'
       })
+      counter = value
+    })
 
-      socket.on('connect', () => {
-        resolve(socket)
+    socket.on('reconnect', () => {
+      toast({
+        message: `Socket ${tab.name} reconnected`
       })
     })
+
+    socket.on('disconnect', reason => {
+      console.warn(reason)
+      tab.socket = null
+      toast({
+        message: `Socket ${tab.name} disconnected`,
+        color: 'error'
+      })
+    })
+
+    socket.on('connect', () => {
+      toast({
+        message: `Socket ${tab.name} connected`
+      })
+    })
+
+    return socket
   }
 }

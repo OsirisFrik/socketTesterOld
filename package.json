@@ -1,8 +1,8 @@
 {
   "name": "sockettester",
-  "version": "0.0.1",
+  "version": "1.2.2",
   "scripts": {
-    "build": "node .electron-vue/build.js && electron-builder",
+    "build": "node .electron-vue/build.js && electron-builder -p onTag",
     "test": "npm run unit && npm run e2e",
     "e2e": "npm run pack && mocha test/e2e",
     "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src test",
@@ -20,6 +20,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.4.0",
     "ace-builds": "^1.4.1",
+    "electron-updater": "^3.1.2",
     "material-design-icons-iconfont": "^3.0.3",
     "nedb-promise": "^2.0.1",
     "socket.io-client": "^2.1.1",
@@ -98,6 +99,14 @@
   "author": "OsirisFrik <osiris@frikdev.com>",
   "description": "Socket.io client tester",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OsirisFrik/socketTester"
+  },
+  "bugs": {
+    "url": "https://github.com/OsirisFrik/socketTester/issues"
+  },
+  "homepage": "https://github.com/OsirisFrik/socketTester#readme",
   "main": "./dist/electron/main.js",
   "build": {
     "productName": "Socket Tester",

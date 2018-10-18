@@ -20,23 +20,51 @@
         <v-card>
           <v-card-title>
             <span class="headline">Querys <v-btn flat icon color="primary">
-                <v-icon @click="addQuery">add</v-icon>
+                <v-icon @click="addOption('querys')">add</v-icon>
               </v-btn>
             </span>
           </v-card-title>
-          <v-data-table :headers="querys" :items="options.querys" :search="searchQuery" hide-actions hide-headers>
+          <v-data-table :items="options.querys" hide-actions hide-headers>
             <template slot="items" slot-scope="props">
               <td>
-                <v-text-field name="queryName" label="Name" :id="`name_${props.index}`" v-model="props.item.name" @blur="updateQuerys"></v-text-field>
+                <v-text-field name="queryName" label="Name" :id="`querys_name_${props.index}`" v-model="props.item.name" @blur="updateOptions('querys')"></v-text-field>
               </td>
               <td class="text-xs-right">
-                <v-text-field name="queryValue" label="Value" :id="`value_${props.index}`" v-model="props.item.value" @blur="updateQuerys"></v-text-field>
+                <v-text-field name="queryValue" label="Value" :id="`querys_value_${props.index}`" v-model="props.item.value" @blur="updateOptions('querys')"></v-text-field>
               </td>
               <td class="text-xs-right">
-                <v-switch :label="$t(props.item.active ? 'general.active' : 'general.inactive')" v-model="props.item.active" @change="updateQuerys"></v-switch>
+                <v-switch :label="$t(props.item.active ? 'general.active' : 'general.inactive')" v-model="props.item.active" @change="updateOptions('querys')"></v-switch>
               </td>
               <td>
-                <v-icon small @click="deleteQuery(props.item, props.index)">delete</v-icon>
+                <v-icon small @click="deleteOption('querys', props.index)">delete</v-icon>
+              </td>
+            </template>
+          </v-data-table>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap>
+      <v-flex>
+        <v-card>
+          <v-card-title>
+            <span class="headline">Headers <v-btn flat icon color="primary">
+                <v-icon @click="addOption('headers')">add</v-icon>
+              </v-btn>
+            </span>
+          </v-card-title>
+          <v-data-table :items="options.headers" hide-actions hide-headers>
+            <template slot="items" slot-scope="props">
+              <td>
+                <v-text-field name="queryName" label="Name" :id="`headers_name_${props.index}`" v-model="props.item.name" @blur="updateOptions('headers')"></v-text-field>
+              </td>
+              <td class="text-xs-right">
+                <v-text-field name="queryValue" label="Value" :id="`headers_value_${props.index}`" v-model="props.item.value" @blur="updateOptions('headers')"></v-text-field>
+              </td>
+              <td class="text-xs-right">
+                <v-switch :label="$t(props.item.active ? 'general.active' : 'general.inactive')" v-model="props.item.active" @change="updateOptions('headers')"></v-switch>
+              </td>
+              <td>
+                <v-icon small @click="deleteOption('headers', props.index)">delete</v-icon>
               </td>
             </template>
           </v-data-table>
@@ -46,6 +74,11 @@
   </div>
 </template>
 <script>
+  const newOption = {
+    name: null,
+    value: null,
+    active: false
+  }
   export default {
     name: 'Options',
     props: {
@@ -53,22 +86,15 @@
       index: Number,
       options: Object
     },
-    data: () => ({
-      searchQuery: '',
-      querys: [{
-        text: 'Query Name',
-        align: 'left',
-        value: 'name'
-      }, {
-        text: 'Value',
-        align: 'center',
-        value: 'value'
-      }, {
-        text: 'Active',
-        align: 'center',
-        value: 'active'
-      }]
-    }),
+    data: () => ({}),
+    mounted () {
+      if (typeof this.options.headers === 'undefined') {
+        this.options.headers = [newOption]
+      }
+      if (typeof this.options.querys === 'undefined') {
+        this.options.querys = [newOption]
+      }
+    },
     methods: {
       updatePath: function () {
         this.$tabs.update({
@@ -85,25 +111,29 @@
           throw Error(err)
         })
       },
-      addQuery: function () {
-        this.options.querys.push({
+      addOption: function (option) {
+        this.options[option].push({
           name: null,
           value: null,
           active: false
         })
-        this.updateQuerys('added')
+        this.updateOptions(option, 'added')
+        let save = this
+        setTimeout(function () {
+          document.getElementById(`${option}_name_${save.options[option].length - 1}`).focus()
+        }, 100)
       },
-      deleteQuery: function (query, index) {
-        this.options.querys.splice(index, 1)
-        this.updateQuerys('deleted')
+      deleteOption: function (option, index) {
+        this.options[option].splice(index, 1)
+        this.updateOptions(option, 'deleted')
       },
-      updateQuerys: function (type) {
+      updateOptions: function (option, message) {
         this.$tabs.update({_id: this.id}, {$set: {
-          'options.querys': this.options.querys
+          [`options.${option}`]: this.options[option]
         }}).then(() => {
-          if (typeof type === 'string') {
+          if (typeof message === 'string') {
             this.$toast({
-              message: `Query ${type}`,
+              message: message,
               color: 'success'
             })
           }

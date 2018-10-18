@@ -37,6 +37,11 @@
         name: null,
         value: null,
         active: false
+      }],
+      headers: [{
+        name: null,
+        value: null,
+        active: false
       }]
     },
     events: [{

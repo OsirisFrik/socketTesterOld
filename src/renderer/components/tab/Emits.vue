@@ -17,7 +17,7 @@
               </v-btn>
             </span>
           </v-card-title>
-          <v-data-table :headers="emmitsHeaders" :items="emits" hide-actions hide-headers>
+          <v-data-table :items="emits" hide-actions hide-headers>
             <template slot="items" slot-scope="props">
               <td>
                 <v-text-field name="queryName" label="Name" :id="`name_${props.index}`" v-model="props.item.event" @blur="updateEmits"></v-text-field>
@@ -61,20 +61,7 @@
       sourcecode: 'var hi = "hi"',
       editor: null,
       beautify: null,
-      onEdit: null,
-      emmitsHeaders: [{
-        text: 'Emit name',
-        align: 'left',
-        value: 'event'
-      }, {
-        text: 'Active',
-        align: 'center',
-        value: 'active'
-      }, {
-        text: 'Show',
-        alias: 'center',
-        value: 'show'
-      }]
+      onEdit: null
     }),
     mounted () {
       if (process.env.NODE_ENV === 'development') {

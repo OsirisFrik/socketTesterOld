@@ -21,7 +21,7 @@ async function getQuerys (querys) {
 /**
  * @method getHeaders
  * @param {Array} headers
- * @returns {Object}
+ * @returns {Object} HEADERS
  */
 
 async function getHeaders (headers) {
@@ -29,7 +29,15 @@ async function getHeaders (headers) {
   for (let i = 0; i < headers.length; i++) {
     const header = headers[i]
     if (header.active) {
-      HEADERS[header.name] = header.value
+      if (typeof HEADERS[header.name] !== 'undefined' && HEADERS[headers.name] !== null) {
+        if (Array.isArray(HEADERS[header.name])) {
+          HEADERS[header.name].push(header.value)
+        } else {
+          HEADERS[header.name] = [HEADERS[header.name], header.value]
+        }
+      } else {
+        HEADERS[header.name] = header.value
+      }
     }
   }
   return HEADERS

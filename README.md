@@ -8,14 +8,14 @@
 [![made-with-electron](https://img.shields.io/badge/made%20with-electron-green.svg?longCache=true&style=for-the-badge)](https://electron.io)
 ![with-vue](https://img.shields.io/badge/made%20with-vue.js-green.svg?longCache=true&style=for-the-badge&logo=vue.js)
 ![for-develipers](https://img.shields.io/badge/for-developers-orange.svg?longCache=true&style=for-the-badge)
-![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg?&longCache=true&style=for-the-badg)
+![GitHub](https://img.shields.io/badge/license-MIT-blue.svg?longCache=true&style=for-the-badge)
 <br>
 [![Travis (.org) branch](https://img.shields.io/travis/OsirisFrik/socketTester/master.svg?icon=travisci&longCache=true&style=for-the-badge)](https://travis-ci.org/OsirisFrik/socketTester)
 [![Build status](https://img.shields.io/appveyor/ci/OsirisFrik/SocketTester/master.svg?icon=appveyor&longCache=true&style=for-the-badge)](https://ci.appveyor.com/project/OsirisFrik/sockettester/branch/master)
 <br>
 ![windows](https://img.shields.io/badge/windows-blue.svg?icon=apple&longCache=true&style=for-the-badge)
-![osx](https://img.shields.io/badge/osx-gren.svg?icon=appveyor&longCache=true&style=for-the-badge)
-![linux](https://img.shields.io/badge/linux-gren.svg?icon=linux&longCache=true&style=for-the-badge)
+![osx](https://img.shields.io/badge/osx-blue.svg?icon=appveyor&longCache=true&style=for-the-badge)
+![linux](https://img.shields.io/badge/linux-lightgrey.svg?icon=linux&longCache=true&style=for-the-badge)
 <br>
 <br>
 

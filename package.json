@@ -1,6 +1,6 @@
 {
   "name": "sockettester",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder -p onTag",
     "test": "npm run unit && npm run e2e",

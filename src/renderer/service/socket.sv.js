@@ -30,11 +30,7 @@ async function getHeaders (headers) {
     const header = headers[i]
     if (header.active) {
       if (typeof HEADERS[header.name] !== 'undefined' && HEADERS[headers.name] !== null) {
-        if (Array.isArray(HEADERS[header.name])) {
-          HEADERS[header.name].push(header.value)
-        } else {
-          HEADERS[header.name] = [HEADERS[header.name], header.value]
-        }
+        HEADERS[header.name] += `; ${header.value}`
       } else {
         HEADERS[header.name] = header.value
       }

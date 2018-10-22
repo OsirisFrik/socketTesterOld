@@ -91,15 +91,6 @@ export default {
       })
     })
 
-    socket.on('disconnect', reason => {
-      console.warn(reason)
-      tab.socket = null
-      toast({
-        message: `Socket ${tab.name} disconnected`,
-        color: 'error'
-      })
-    })
-
     socket.on('connect', () => {
       toast({
         message: `Socket ${tab.name} connected`

@@ -20,7 +20,7 @@
           <v-data-table :items="events" hide-actions hide-headers>
             <template slot="items" slot-scope="props">
               <td>
-                <v-text-field name="queryName" label="Name" :id="`name_${props.index}`" v-model="props.item.event" @blur="updateEvents"></v-text-field>
+                <v-text-field name="queryName" label="Name" :id="`event_name_${props.index}`" v-model="props.item.event" @blur="updateEvents"></v-text-field>
               </td>
               <td class="text-xs-right">
                 <v-switch :label="$t(props.item.active ? 'general.active' : 'general.inactive')" v-model="props.item.active"
@@ -78,6 +78,9 @@
         if (socket !== null) {
           for (let i = 0; i < this.events.length; i++) {
             const event = this.events[i]
+            if (typeof event.data === 'undefined') {
+              event.data = []
+            }
             if (event.active) {
               socket.on(event.event, data => {
                 event.data.push(data)
@@ -97,6 +100,11 @@
             event.show = false
           } else {
             event.show = true
+            if (typeof event.data === 'undefined') {
+              event.data = []
+            }
+            this.editor.setValue(JSON.stringify(event.data))
+            this.beautify.beautify(this.editor.session)
           }
         }
         this.updateEvents()
@@ -109,6 +117,10 @@
           active: false,
           show: false
         })
+        let vm = this
+        setTimeout(function () {
+          document.getElementById(`event_name_${vm.events.length - 1}`).focus()
+        }, 100)
         this.updateEvents('added')
       },
       updateEvents: function (type) {

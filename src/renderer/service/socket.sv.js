@@ -97,6 +97,14 @@ export default {
       })
     })
 
+    socket.on('disconnect', data => {
+      toast({
+        message: `Sokcet ${tab.name} disconnected`,
+        color: 'error'
+      })
+      tab.socket = null
+    })
+
     return socket
   }
 }
